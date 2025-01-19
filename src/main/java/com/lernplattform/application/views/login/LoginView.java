@@ -1,16 +1,46 @@
 package com.lernplattform.application.views.login;
 
-import com.lernplattform.application.security.AuthenticatedUser;
-import com.vaadin.flow.component.login.LoginI18n;
-import com.vaadin.flow.component.login.LoginOverlay;
-import com.vaadin.flow.router.BeforeEnterEvent;
-import com.vaadin.flow.router.BeforeEnterObserver;
-import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.router.Route;
-import com.vaadin.flow.router.internal.RouteUtil;
-import com.vaadin.flow.server.VaadinService;
+import com.lernplattform.application.views.register.RegisterView;
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.login.LoginForm;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.PasswordField;
+import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.router.*;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 
+
+@PageTitle("Login")
+@Route("login")
+@Menu(order = 0, icon = "line-awesome/svg/user-circle-solid.svg")
+@AnonymousAllowed
+
+public class LoginView extends VerticalLayout {
+
+    private Button register;
+
+    public LoginView() {
+
+        var login = new LoginForm();
+        login.setAction("login");
+        login.setForgotPasswordButtonVisible(false);
+
+        this.register = new Button("Create new User");
+        this.register.setWidth("17rem");
+        this.register.addClickListener(e ->
+                register.getUI().ifPresent(ui ->
+                        ui.navigate(RegisterView.class)));
+
+
+        this.add(login, this.register);
+        this.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
+        this.setSizeFull();
+        this.setMargin(false);
+    }
+
+}
+
+/*
 @AnonymousAllowed
 @PageTitle("Login")
 @Route(value = "login")
@@ -44,3 +74,5 @@ public class LoginView extends LoginOverlay implements BeforeEnterObserver {
         setError(event.getLocation().getQueryParameters().getParameters().containsKey("error"));
     }
 }
+
+ */

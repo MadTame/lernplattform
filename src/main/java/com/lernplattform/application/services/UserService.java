@@ -1,4 +1,4 @@
-package com.lernplattform.application.services;
+/*package com.lernplattform.application.services;
 
 import com.lernplattform.application.data.User;
 import com.lernplattform.application.data.UserRepository;
@@ -42,3 +42,6 @@ public class UserService {
     }
 
 }
+
+
+ */
