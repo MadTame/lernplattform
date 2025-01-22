@@ -95,6 +95,39 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+    
+    <!-- 
+    <reporting>
+	    <plugins>
+	    	<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-pmd-plugin</artifactId>
+		        <version>3.26.0</version>
+		        <configuration>
+		        	<linkXref>true</linkXref>
+		            <inputEncoding>utf-8</inputEncoding>
+		            <minimumTokens>100</minimumTokens>
+		            <targetJdk>1.5</targetJdk>
+		            <excludes>
+		           		<exclude>**/*Bean.java</exclude>
+		            	<exclude>**/generated/*.java</exclude>
+		            </excludes>
+		            <excludeRoots>
+		            	<excludeRoot>target/generated-sources/stubs</excludeRoot>
+		            </excludeRoots>
+		            <rulesets>
+            			<ruleset>pmd-custom-ruleset.xml</ruleset>
+        			</rulesets>
+		        </configuration>
+	    	</plugin>
+	    	<plugin>
+	        	<groupId>org.codehaus.mojo</groupId>
+	        	<artifactId>findbugs-maven-plugin</artifactId>
+	        	<version>3.0.5</version>
+	        </plugin>
+		</plugins>
+    </reporting>   	       
+   -->
 
     <build>
         <defaultGoal>spring-boot:run</defaultGoal>
@@ -143,6 +176,50 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+				 <artifactId>maven-checkstyle-plugin</artifactId>
+	          <version>3.6.0</version>
+	          <configuration>
+	            <configLocation>google_checks.xml</configLocation>
+	            <failOnViolation>true</failOnViolation>
+	            <linkXRef>false</linkXRef>
+	          </configuration>
+	          <executions>
+	            <execution>
+	              <phase>validate</phase>
+	              <goals>
+	                <goal>check</goal>
+	              </goals>
+	            </execution>
+	          </executions>
+	        </plugin>
+	        <plugin>
+				<groupId>com.github.spotbugs</groupId>
+				<artifactId>spotbugs-maven-plugin</artifactId>
+				<version>4.8.5.0</version>
+				<configuration>
+					<htmlOutput>true</htmlOutput>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<version>3.26.0</version>
+				<configuration>
+					<rulesets>
+						<ruleset>pmd-custom-ruleset.xml</ruleset>
+					</rulesets>
+					<linkXRef>false</linkXRef>
+				</configuration>
+				<executions>
+					<execution>
+					<phase>validate</phase>
+					<goals>
+						<goal>check</goal>
+					</goals>
+					</execution>
+				</executions>
+			</plugin>
         </plugins>
     </build>
 

@@ -1,11 +1,11 @@
 package com.lernplattform.application.views.homepage;
 
-import com.lernplattform.application.views.crm.Client;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.grid.dataview.GridListDataView;
-import com.vaadin.flow.component.gridpro.GridPro;
-import com.vaadin.flow.component.html.*;
+import com.vaadin.flow.component.html.Footer;
+import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.Header;
+import com.vaadin.flow.component.html.Main;
+import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -13,8 +13,6 @@ import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
-import jakarta.annotation.security.RolesAllowed;
-import org.vaadin.lineawesome.LineAwesomeIconUrl;
 
 @PageTitle("Homepage")
 @Route("")
@@ -22,85 +20,88 @@ import org.vaadin.lineawesome.LineAwesomeIconUrl;
 @PermitAll
 public class HomepageView extends VerticalLayout {
 
-    public HomepageView() {
-        // Set up the overall layout
-        this.setSizeFull();
-        this.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
-        this.setPadding(false);
-        this.setSpacing(false);
-        this.getStyle().set("padding-left", "1rem");
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
 
-        // Create the header
-        Header header = createHeader();
+  public HomepageView() {
+    // Set up the overall layout
+    this.setSizeFull();
+    this.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
+    this.setPadding(false);
+    this.setSpacing(false);
+    this.getStyle().set("padding-left", "1rem");
 
-        // Create the main content
-        Main mainContent = createMainContent();
+    // Create the header
+    Header header = createHeader();
 
-        // Create the footer
-        Footer footer = createFooter();
+    // Create the main content
+    Main mainContent = createMainContent();
 
-        // Add all components to the layout
-        add(header, mainContent, footer);
-    }
+    // Create the footer
+    Footer footer = createFooter();
 
-    private Header createHeader() {
-        H1 title = new H1("Welcome to the Homepage");
-        title.getStyle().set("margin", "0");
+    // Add all components to the layout
+    add(header, mainContent, footer);
+  }
 
-        Button aboutButton = new Button("About", e -> {
-            // Add navigation logic here if needed
-        });
+  private Header createHeader() {
+    H1 title = new H1("Welcome to the Homepage");
+    title.getStyle().set("margin", "0");
 
-        Button contactButton = new Button("Contact", e -> {
-            // Add navigation logic here if needed
-        });
+    Button aboutButton = new Button("About", e -> {
+      // Add navigation logic here if needed
+    });
 
-        HorizontalLayout navBar = new HorizontalLayout(aboutButton, contactButton);
-        navBar.setSpacing(true);
+    Button contactButton = new Button("Contact", e -> {
+      // Add navigation logic here if needed
+    });
 
-        Header header = new Header(title, navBar);
-        header.getStyle().set("padding", "1rem");
-        header.getStyle().set("background-color", "#f3f4f6");
-        header.setWidthFull();
+    HorizontalLayout navBar = new HorizontalLayout(aboutButton, contactButton);
+    navBar.setSpacing(true);
 
-        return header;
-    }
+    Header header = new Header(title, navBar);
+    header.getStyle().set("padding", "1rem");
+    header.getStyle().set("background-color", "#f3f4f6");
+    header.setWidthFull();
 
-    private Main createMainContent() {
-        H1 mainTitle = new H1("Welcome to the homepage!");
-        mainTitle.getStyle().set("margin-bottom", "1rem");
+    return header;
+  }
 
-        Paragraph mainText = new Paragraph(
-                "This is the main content area where you can sign up for courses" +
-                        " and exams"
-        );
+  private Main createMainContent() {
+    H1 mainTitle = new H1("Welcome to the homepage!");
+    mainTitle.getStyle().set("margin-bottom", "1rem");
 
-        Button learnMoreButton = new Button("Learn More", e -> {
-            // Add action logic here
-        });
+    Paragraph mainText = new Paragraph(
+        "This is the main content area where you can sign up for courses" + " and exams");
 
-        VerticalLayout contentLayout = new VerticalLayout(mainTitle, mainText, learnMoreButton);
-        contentLayout.setSpacing(true);
-        contentLayout.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
-        contentLayout.setHeightFull();
+    Button learnMoreButton = new Button("Learn More", e -> {
+      // Add action logic here
+    });
 
-        Main mainContent = new Main(contentLayout);
-        mainContent.getStyle().set("padding", "2rem");
-        mainContent.setHeightFull();
+    VerticalLayout contentLayout = new VerticalLayout(mainTitle, mainText, learnMoreButton);
+    contentLayout.setSpacing(true);
+    contentLayout.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
+    contentLayout.setHeightFull();
 
-        return mainContent;
-    }
+    Main mainContent = new Main(contentLayout);
+    mainContent.getStyle().set("padding", "2rem");
+    mainContent.setHeightFull();
 
-    private Footer createFooter() {
-        Paragraph footerText = new Paragraph("© 2025 Lernplattform. All rights reserved.");
-        footerText.getStyle().set("margin", "0");
+    return mainContent;
+  }
 
-        Footer footer = new Footer(footerText);
-        footer.getStyle().set("padding", "1rem");
-        footer.getStyle().set("background-color", "#f3f4f6");
-        footer.setWidthFull();
+  private Footer createFooter() {
+    Paragraph footerText = new Paragraph("© 2025 Lernplattform. All rights reserved.");
+    footerText.getStyle().set("margin", "0");
 
-        return footer;
-    }
+    Footer footer = new Footer(footerText);
+    footer.getStyle().set("padding", "1rem");
+    footer.getStyle().set("background-color", "#f3f4f6");
+    footer.setWidthFull();
+
+    return footer;
+  }
 }
 

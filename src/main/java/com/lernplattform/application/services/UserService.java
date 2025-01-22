@@ -1,47 +1,48 @@
-/*package com.lernplattform.application.services;
+package com.lernplattform.application.services;
+
+import java.util.List;
 
 import com.lernplattform.application.data.User;
 import com.lernplattform.application.data.UserRepository;
-import java.util.Optional;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class UserService {
 
-    private final UserRepository repository;
+    private final UserRepository userRepository;
 
-    public UserService(UserRepository repository) {
-        this.repository = repository;
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
-    public Optional<User> get(Long id) {
-        return repository.findById(id);
+    public List<User> findAllUsers() {
+        return userRepository.findAll();
     }
 
-    public User save(User entity) {
-        return repository.save(entity);
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 
-    public void delete(Long id) {
-        repository.deleteById(id);
+    public boolean isUsernameTaken(String username) {
+        try {
+            this.findByUsername(username);
+            return true;
+        } catch (EmptyResultDataAccessException ex) {
+            return false;
+        }
     }
 
-    public Page<User> list(Pageable pageable) {
-        return repository.findAll(pageable);
+    public long countUsers() {
+        return userRepository.count();
     }
 
-    public Page<User> list(Pageable pageable, Specification<User> filter) {
-        return repository.findAll(filter, pageable);
+    public void deleteUser(User user) {
+        userRepository.delete(user);
     }
 
-    public int count() {
-        return (int) repository.count();
+    public void saveUser(User user) {
+        userRepository.save(user);
     }
-
 }
-
-
- */

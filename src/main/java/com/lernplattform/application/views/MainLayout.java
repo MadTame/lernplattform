@@ -1,12 +1,13 @@
 package com.lernplattform.application.views;
 
+import java.util.List;
+import java.util.Optional;
 import com.lernplattform.application.data.User;
 import com.lernplattform.application.security.AuthenticatedUser;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.avatar.Avatar;
 import com.vaadin.flow.component.contextmenu.MenuItem;
-import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Footer;
 import com.vaadin.flow.component.html.H1;
@@ -19,15 +20,11 @@ import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.sidenav.SideNav;
 import com.vaadin.flow.component.sidenav.SideNavItem;
 import com.vaadin.flow.router.Layout;
-import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.server.auth.AccessAnnotationChecker;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import com.vaadin.flow.server.menu.MenuConfiguration;
 import com.vaadin.flow.server.menu.MenuEntry;
 import com.vaadin.flow.theme.lumo.LumoUtility;
-import java.io.ByteArrayInputStream;
-import java.util.List;
-import java.util.Optional;
 
 /**
  * The main view is a top-level placeholder for other views.
@@ -36,98 +33,103 @@ import java.util.Optional;
 @AnonymousAllowed
 public class MainLayout extends AppLayout {
 
-    private H1 viewTitle;
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
 
-    private AuthenticatedUser authenticatedUser;
-    private AccessAnnotationChecker accessChecker;
+  private H1 viewTitle;
 
-    public MainLayout(AuthenticatedUser authenticatedUser, AccessAnnotationChecker accessChecker) {
-        this.authenticatedUser = authenticatedUser;
-        this.accessChecker = accessChecker;
+  private final transient AuthenticatedUser authenticatedUser;
+  private AccessAnnotationChecker accessChecker;
 
-        setPrimarySection(Section.DRAWER);
-        addDrawerContent();
-        addHeaderContent();
-    }
+  public MainLayout(AuthenticatedUser authenticatedUser, AccessAnnotationChecker accessChecker) {
+    this.authenticatedUser = authenticatedUser;
+    this.accessChecker = accessChecker;
 
-    private void addHeaderContent() {
-        DrawerToggle toggle = new DrawerToggle();
-        toggle.setAriaLabel("Menu toggle");
+    setPrimarySection(Section.DRAWER);
+    addDrawerContent();
+    addHeaderContent();
+  }
 
-        viewTitle = new H1();
-        viewTitle.addClassNames(LumoUtility.FontSize.LARGE, LumoUtility.Margin.NONE);
+  private void addHeaderContent() {
+    DrawerToggle toggle = new DrawerToggle();
+    toggle.setAriaLabel("Menu toggle");
 
-        addToNavbar(true, toggle, viewTitle);
-    }
+    viewTitle = new H1();
+    viewTitle.addClassNames(LumoUtility.FontSize.LARGE, LumoUtility.Margin.NONE);
 
-    private void addDrawerContent() {
-        Span appName = new Span("Lernplattform");
-        appName.addClassNames(LumoUtility.FontWeight.SEMIBOLD, LumoUtility.FontSize.LARGE);
-        Header header = new Header(appName);
+    addToNavbar(true, toggle, viewTitle);
+  }
 
-        Scroller scroller = new Scroller(createNavigation());
+  private void addDrawerContent() {
+    Span appName = new Span("Lernplattform");
+    appName.addClassNames(LumoUtility.FontWeight.SEMIBOLD, LumoUtility.FontSize.LARGE);
+    Header header = new Header(appName);
 
-        addToDrawer(header, scroller, createFooter());
-    }
+    Scroller scroller = new Scroller(createNavigation());
 
-    private SideNav createNavigation() {
-        SideNav nav = new SideNav();
+    addToDrawer(header, scroller, createFooter());
+  }
 
-        List<MenuEntry> menuEntries = MenuConfiguration.getMenuEntries();
-        menuEntries.forEach(entry -> {
-            if (entry.icon() != null) {
-                nav.addItem(new SideNavItem(entry.title(), entry.path(), new SvgIcon(entry.icon())));
-            } else {
-                nav.addItem(new SideNavItem(entry.title(), entry.path()));
-            }
+  private SideNav createNavigation() {
+    SideNav nav = new SideNav();
+
+    List<MenuEntry> menuEntries = MenuConfiguration.getMenuEntries();
+    menuEntries.forEach(entry -> {
+      if (entry.icon() != null) {
+        nav.addItem(new SideNavItem(entry.title(), entry.path(), new SvgIcon(entry.icon())));
+      } else {
+        nav.addItem(new SideNavItem(entry.title(), entry.path()));
+      }
+    });
+
+    return nav;
+  }
+
+  private Footer createFooter() {
+    Footer layout = new Footer();
+
+    if (authenticatedUser != null) {
+      Optional<User> maybeUser = authenticatedUser.get();
+      if (maybeUser.isPresent()) {
+        User user = maybeUser.get();
+
+        Avatar avatar = new Avatar(user.getName());
+        avatar.setThemeName("xsmall");
+        avatar.getElement().setAttribute("tabindex", "-1");
+
+        MenuBar userMenu = new MenuBar();
+        userMenu.setThemeName("tertiary-inline contrast");
+
+        MenuItem userName = userMenu.addItem("");
+        Div div = new Div();
+        div.add(avatar);
+        div.add(user.getName());
+        div.add(new Icon("lumo", "dropdown"));
+        div.getElement().getStyle().set("display", "flex");
+        div.getElement().getStyle().set("align-items", "center");
+        div.getElement().getStyle().set("gap", "var(--lumo-space-s)");
+        userName.add(div);
+        userName.getSubMenu().addItem("Sign out", e -> {
+          authenticatedUser.logout();
         });
 
-        return nav;
+        layout.add(userMenu);
+      }
     }
 
-    private Footer createFooter() {
-        Footer layout = new Footer();
 
-        if (authenticatedUser != null) {
-            Optional<User> maybeUser = authenticatedUser.get();
-            if (maybeUser.isPresent()) {
-                User user = maybeUser.get();
+    return layout;
+  }
 
-                Avatar avatar = new Avatar(user.getName());
-                avatar.setThemeName("xsmall");
-                avatar.getElement().setAttribute("tabindex", "-1");
+  @Override
+  protected void afterNavigation() {
+    super.afterNavigation();
+    viewTitle.setText(getCurrentPageTitle());
+  }
 
-                MenuBar userMenu = new MenuBar();
-                userMenu.setThemeName("tertiary-inline contrast");
-
-                MenuItem userName = userMenu.addItem("");
-                Div div = new Div();
-                div.add(avatar);
-                div.add(user.getName());
-                div.add(new Icon("lumo", "dropdown"));
-                div.getElement().getStyle().set("display", "flex");
-                div.getElement().getStyle().set("align-items", "center");
-                div.getElement().getStyle().set("gap", "var(--lumo-space-s)");
-                userName.add(div);
-                userName.getSubMenu().addItem("Sign out", e -> {
-                    authenticatedUser.logout();
-                });
-
-                layout.add(userMenu);
-            }
-        }
-
-
-        return layout;
-    }
-
-    @Override
-    protected void afterNavigation() {
-        super.afterNavigation();
-        viewTitle.setText(getCurrentPageTitle());
-    }
-
-    private String getCurrentPageTitle() {
-        return MenuConfiguration.getPageHeader(getContent()).orElse("");
-    }
+  private String getCurrentPageTitle() {
+    return MenuConfiguration.getPageHeader(getContent()).orElse("");
+  }
 }
