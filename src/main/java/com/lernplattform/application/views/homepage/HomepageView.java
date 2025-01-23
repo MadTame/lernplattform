@@ -20,9 +20,6 @@ import jakarta.annotation.security.PermitAll;
 @PermitAll
 public class HomepageView extends VerticalLayout {
 
-  /**
-   * 
-   */
   private static final long serialVersionUID = 1L;
 
   public HomepageView() {

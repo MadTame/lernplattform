@@ -14,13 +14,17 @@ public class AuthenticatedUser {
 
 
   private transient final UserRepository userRepository;
-  private transient AuthenticationContext authenticationContext;
+  @Autowired
+  private transient final AuthenticationContext authenticationContext;
 
   @Autowired
   public AuthenticatedUser(AuthenticationContext authenticationContext,
       UserRepository userRepository) {
     this.userRepository = userRepository;
     this.authenticationContext = authenticationContext;
+    // this.authenticationContext =
+    // Objects.requireNonNull(authenticationContext, "authenticationContext must not be null");
+
   }
 
   @Transactional
@@ -32,5 +36,4 @@ public class AuthenticatedUser {
   public void logout() {
     authenticationContext.logout();
   }
-
 }

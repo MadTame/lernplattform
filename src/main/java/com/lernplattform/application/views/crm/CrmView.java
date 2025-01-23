@@ -1,6 +1,9 @@
 package com.lernplattform.application.views.crm;
 
 import java.util.List;
+import java.util.Objects;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
 import com.lernplattform.application.data.Role;
 import com.lernplattform.application.data.User;
@@ -30,12 +33,14 @@ public class CrmView extends Div {
 
   private static final long serialVersionUID = 1L;
 
+  private static final Logger logger = LogManager.getLogger(CrmView.class);
+
   private final transient UserService userService;
 
   private Grid<User> grid;
 
   public CrmView(UserService userService) {
-    this.userService = userService;
+    this.userService = Objects.requireNonNull(userService, "userService must not be null");
 
     this.addClassName("crm-view");
     this.setSizeFull();
@@ -55,7 +60,7 @@ public class CrmView extends Div {
     updateGrid();
   }
 
-  private void updateGrid() {
+  public void updateGrid() {
     List<User> users = this.userService.findAllUsers();
     this.grid.setItems(users);
   }
@@ -68,7 +73,7 @@ public class CrmView extends Div {
     });
   }
 
-  private Dialog createDialog(User user) {
+  Dialog createDialog(User user) {
     // Dialog
     Dialog dialog = new Dialog();
     dialog.setHeaderTitle("Edit User");
@@ -105,8 +110,15 @@ public class CrmView extends Div {
     Button saveButton = new Button("Save", e -> {
       if (binder.writeBeanIfValid(user)) {
         // Call your service to save changes
-        userService.saveUser(user);
-        Notification.show("User updated successfully");
+        try {
+          userService.saveUser(user);
+          Notification.show("User updated successfully");
+          logger.info("User " + user.getUsername() + " was saved successfully");
+        } catch (Exception exc) {
+          logger.warn("An error occurred during save event of user" + user.getUsername()
+              + " in crm dialog");
+        }
+
         dialog.close();
         updateGrid();
       } else {

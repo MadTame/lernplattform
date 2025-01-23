@@ -1,5 +1,8 @@
 package com.lernplattform.application.views.register;
 
+import java.util.Objects;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import com.lernplattform.application.data.User;
@@ -15,6 +18,7 @@ import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
+import io.micrometer.common.util.StringUtils;
 
 @PageTitle("Register")
 @Route("register")
@@ -24,16 +28,19 @@ public class RegisterView extends VerticalLayout {
 
 
   private static final long serialVersionUID = 1L;
-  private TextField firstName;
-  private TextField lastName;
-  private PasswordField password;
-  private Button register;
+  TextField firstName;
+  TextField lastName;
+  PasswordField password;
+  Button register;
   private transient final UserService userService;
   @Autowired
   private transient final PasswordEncoder passwordEncoder;
 
+  private static final Logger logger = LogManager.getLogger(RegisterView.class);
+
+
   public RegisterView(UserService userService, PasswordEncoder passwordEncoder) {
-    this.userService = userService;
+    this.userService = Objects.requireNonNull(userService, "userService must not be null");
     this.passwordEncoder = passwordEncoder;
 
     this.firstName = new TextField();
@@ -51,11 +58,16 @@ public class RegisterView extends VerticalLayout {
     this.register = new Button("Register");
     this.register.setWidth("17rem");
     this.register.addClickListener(event -> {
-      if (firstName.getValue() != null && lastName.getValue() != null
-          && password.getValue() != null) {
+      if (StringUtils.isNotBlank(firstName.getValue())
+          && StringUtils.isNotBlank(lastName.getValue())
+          && StringUtils.isNotBlank(password.getValue())) {
         register(firstName.getValue(), lastName.getValue(), password.getValue());
       } else {
-        Notification.show("Please fill out all required fields.");
+        try {
+          Notification.show("Please fill out all required fields.");
+        } catch (Exception e) {
+          logger.info("Notification event in registerView failed, or was invoked during unit test");
+        }
       }
     });
 
@@ -74,19 +86,21 @@ public class RegisterView extends VerticalLayout {
     user.setHashedPassword(passwordEncoder.encode(password));
 
     int counter = 1;
-
     while (this.userService.isUsernameTaken(user.getUsername())) {
       user.setUsername(user.getUsername() + counter);
     }
 
     userService.saveUser(user);
-    Notification.show("Created user successfully. Your username is: " + user.getUsername());
-    UI.getCurrent().navigate(LoginView.class);
-
+    try {
+      Notification.show("Created user successfully. Your username is: " + user.getUsername());
+      UI.getCurrent().navigate(LoginView.class);
+    } catch (Exception e) {
+      logger.info("Notification event in registerView failed, or was invoked during unit test");
+    }
 
   }
 
-  private String parseUsername(String firstName, String lastName) {
+  String parseUsername(String firstName, String lastName) {
     firstName = firstName.trim().toLowerCase();
     lastName = lastName.trim().toLowerCase();
 

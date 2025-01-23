@@ -56,5 +56,4 @@ public class User extends AbstractEntity {
     Set<Role> copySet = new HashSet<Role>(roles);
     this.roles = copySet;
   }
-
 }

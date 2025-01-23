@@ -15,11 +15,6 @@ public class Application implements AppShellConfigurator {
 
   private static final long serialVersionUID = 1L;
 
-  // Package-private constructor
-  Application() {
-    // Constructor logic (if any)
-  }
-
   public static void main(String[] args) {
     SpringApplication.run(Application.class, args);
   }
