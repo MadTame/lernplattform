@@ -9,7 +9,7 @@
       </pattern>
     </extension>
     <option name="PACKAGE_NAME" value="com.lernplattform.application.views.crm" />
-    <option name="MAIN_CLASS_NAME" value="com.lernplattform.application.views.crm.CrmViewTest" />
+    <option name="MAIN_CLASS_NAME" value="crm.views.de.fh.albsig.$92012.CrmViewTest" />
     <option name="METHOD_NAME" value="testCreateDialog" />
     <option name="TEST_OBJECT" value="method" />
     <method v="2">

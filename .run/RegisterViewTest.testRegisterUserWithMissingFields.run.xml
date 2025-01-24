@@ -9,7 +9,7 @@
       </pattern>
     </extension>
     <option name="PACKAGE_NAME" value="com.lernplattform.application.views.register" />
-    <option name="MAIN_CLASS_NAME" value="com.lernplattform.application.views.register.RegisterViewTest" />
+    <option name="MAIN_CLASS_NAME" value="register.views.de.fh.albsig.$92012.RegisterViewTest" />
     <option name="METHOD_NAME" value="testRegisterUserWithMissingFields" />
     <option name="TEST_OBJECT" value="method" />
     <method v="2">
