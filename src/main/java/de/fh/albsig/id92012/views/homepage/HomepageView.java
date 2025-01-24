@@ -1,4 +1,4 @@
-package de.fh.albsig.$92012.views.homepage;
+package de.fh.albsig.id92012.views.homepage;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Footer;
@@ -14,6 +14,12 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
 
+/**
+ * The homepage view displayed when accessing the main page of the application.
+ * 
+ * <p>This view contains a header with navigation buttons, the main content area with information
+ * about the platform, and a footer.</p>
+ */
 @PageTitle("Homepage")
 @Route("")
 @Menu(order = 2, icon = "line-awesome/svg/globe-solid.svg")
@@ -22,6 +28,12 @@ public class HomepageView extends VerticalLayout {
 
   private static final long serialVersionUID = 1L;
 
+  /**
+   * Constructs the homepage view, initializing the header, main content, and footer.
+   * 
+   * <p>This constructor sets up the layout and adds the necessary components for the homepage
+   * view.</p>
+   */
   public HomepageView() {
     // Set up the overall layout
     this.setSizeFull();
@@ -101,4 +113,3 @@ public class HomepageView extends VerticalLayout {
     return footer;
   }
 }
-

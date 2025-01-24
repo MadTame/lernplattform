@@ -1,4 +1,4 @@
 @NonNullApi
-package de.fh.albsig.$92012.data;
+package de.fh.albsig.id92012.services;
 
 import org.springframework.lang.NonNullApi;

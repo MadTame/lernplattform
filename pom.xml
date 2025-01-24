@@ -175,23 +175,31 @@
                 </executions>
             </plugin>
 
+            <!-- Checkstyle Plugin -->
             <plugin>
-				 <artifactId>maven-checkstyle-plugin</artifactId>
-	          <version>3.6.0</version>
-	          <configuration>
-	            <configLocation>google_checks.xml</configLocation>
-	            <failOnViolation>true</failOnViolation>
-	            <linkXRef>false</linkXRef>
-	          </configuration>
-	          <executions>
-	            <execution>
-	              <phase>validate</phase>
-	              <goals>
-	                <goal>check</goal>
-	              </goals>
-	            </execution>
-	          </executions>
-	        </plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.6.0</version>
+                <configuration>
+                    <configLocation>.config/google_checks.xml</configLocation>
+                    <failOnViolation>true</failOnViolation>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.puppycrawl.tools</groupId>
+                        <artifactId>checkstyle</artifactId>
+                        <version>[8.18,)</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
@@ -211,7 +219,7 @@
 				<version>3.26.0</version>
 				<configuration>
 					<rulesets>
-						<ruleset>pmd-custom-ruleset.xml</ruleset>
+                        .config/pmd-custom-ruleset.xml
 					</rulesets>
 					<linkXRef>false</linkXRef>
 				</configuration>
@@ -243,6 +251,16 @@
                     <argLine>
                         -javaagent:${settings.localRepository}/org/mockito/mockito-core/5.14.0/mockito-core-5.14.0.jar -Xshare:off
                     </argLine>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <compilerArgs>
+                        <arg>-proc:full</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
         </plugins>

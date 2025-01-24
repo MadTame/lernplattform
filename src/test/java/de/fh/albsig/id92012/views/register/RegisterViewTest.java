@@ -1,4 +1,4 @@
-package de.fh.albsig.$92012.views.register;
+package de.fh.albsig.id92012.views.register;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -16,8 +16,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
-import de.fh.albsig.$92012.data.User;
-import de.fh.albsig.$92012.services.UserService;
+import de.fh.albsig.id92012.data.User;
+import de.fh.albsig.id92012.services.UserService;
 
 public class RegisterViewTest {
 

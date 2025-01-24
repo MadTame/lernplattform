@@ -1,7 +1,5 @@
-package de.fh.albsig.$92012.views;
+package de.fh.albsig.id92012.views;
 
-import java.util.List;
-import java.util.Optional;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.avatar.Avatar;
@@ -23,11 +21,14 @@ import com.vaadin.flow.server.auth.AnonymousAllowed;
 import com.vaadin.flow.server.menu.MenuConfiguration;
 import com.vaadin.flow.server.menu.MenuEntry;
 import com.vaadin.flow.theme.lumo.LumoUtility;
-import de.fh.albsig.$92012.data.User;
-import de.fh.albsig.$92012.security.AuthenticatedUser;
+import de.fh.albsig.id92012.data.User;
+import de.fh.albsig.id92012.security.AuthenticatedUser;
+import java.util.List;
+import java.util.Optional;
 
 /**
- * The main view is a top-level placeholder for other views.
+ * The main view is a top-level placeholder for other views. This layout includes a sidebar, header,
+ * and footer with navigation and user settings.
  */
 @Layout
 @AnonymousAllowed
@@ -40,6 +41,12 @@ public class MainLayout extends AppLayout {
   private final transient AuthenticatedUser authenticatedUser;
   private AccessAnnotationChecker accessChecker;
 
+  /**
+   * Constructs the main layout with navigation and header components.
+   *
+   * @param authenticatedUser the current authenticated user
+   * @param accessChecker the access checker to handle permissions
+   */
   public MainLayout(AuthenticatedUser authenticatedUser, AccessAnnotationChecker accessChecker) {
     this.authenticatedUser = authenticatedUser;
     this.accessChecker = accessChecker;
@@ -99,7 +106,6 @@ public class MainLayout extends AppLayout {
         MenuBar userMenu = new MenuBar();
         userMenu.setThemeName("tertiary-inline contrast");
 
-        MenuItem userName = userMenu.addItem("");
         Div div = new Div();
         div.add(avatar);
         div.add(user.getName());
@@ -107,6 +113,7 @@ public class MainLayout extends AppLayout {
         div.getElement().getStyle().set("display", "flex");
         div.getElement().getStyle().set("align-items", "center");
         div.getElement().getStyle().set("gap", "var(--lumo-space-s)");
+        MenuItem userName = userMenu.addItem("");
         userName.add(div);
         userName.getSubMenu().addItem("Sign out", e -> {
           authenticatedUser.logout();
@@ -115,7 +122,6 @@ public class MainLayout extends AppLayout {
         layout.add(userMenu);
       }
     }
-
 
     return layout;
   }

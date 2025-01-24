@@ -1,16 +1,16 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="de.fh.albsig.$92012.Application" type="Application" factoryName="Application" nameIsGenerated="true">
+  <configuration default="false" name="de.fh.albsig.id92012.Application" type="Application" factoryName="Application" nameIsGenerated="true">
     <envs>
       <env name="DB_URL" value="jdbc:mysql://tamemarc.lima-db.de:3306/db_437444_5" />
       <env name="DB_PW" value="hmp_hs-albsig" />
       <env name="DB_USERNAME" value="USER437444_tame" />
     </envs>
-    <option name="MAIN_CLASS_NAME" value="de.fh.albsig.$92012.Application" />
+    <option name="MAIN_CLASS_NAME" value="de.fh.albsig.id92012.Application" />
     <module name="lernplattform" />
     <shortenClasspath name="ARGS_FILE" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="de.fh.albsig.$92012.*" />
+        <option name="PATTERN" value="de.fh.albsig.id92012.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>

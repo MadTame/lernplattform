@@ -1,4 +1,4 @@
-package de.fh.albsig.$92012.data;
+package de.fh.albsig.id92012.data;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -7,6 +7,17 @@ import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Version;
 
+/**
+ * Abstract base class for entities that require an ID and version.
+ * 
+ * <p>This class provides a common identifier and versioning mechanism for entities in the
+ * application. It ensures that all subclasses have a unique ID and a version for optimistic
+ * locking.</p>
+ * 
+ * <p>The {@link #id} is generated using a sequence generator, which starts at 1000 to accommodate
+ * pre-existing data from the demo (`data.sql`). The {@link #version} field is used for optimistic
+ * locking.</p>
+ */
 @MappedSuperclass
 public abstract class AbstractEntity {
 
