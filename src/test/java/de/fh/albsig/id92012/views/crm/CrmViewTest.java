@@ -1,4 +1,4 @@
-package de.fh.albsig.$92012.views.crm;
+package de.fh.albsig.id92012.views.crm;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -12,8 +12,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
-import de.fh.albsig.$92012.data.User;
-import de.fh.albsig.$92012.services.UserService;
+import de.fh.albsig.id92012.data.User;
+import de.fh.albsig.id92012.services.UserService;
 
 class CrmViewTest {
 
@@ -38,6 +38,7 @@ class CrmViewTest {
   }
 
   @Test
+  @SuppressWarnings("unchecked")
   void testGridIsPopulated() {
 
     // update Grid is called in constructor
@@ -63,5 +64,4 @@ class CrmViewTest {
     // Check if dialog is created
     assertNotNull(dialog);
   }
-
 }
