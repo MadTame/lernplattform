@@ -39,6 +39,11 @@ public class SecurityConfiguration extends VaadinWebSecurity {
     http.authorizeHttpRequests(authorize -> authorize
         .requestMatchers(new AntPathRequestMatcher("/line-awesome/**/*.svg")).permitAll());
 
+    // Permit all requests for favicon.ico
+    http.authorizeHttpRequests(authorize -> authorize
+            .requestMatchers(new AntPathRequestMatcher("/favicon.ico")).permitAll());
+
+
     // Apply Vaadin's default security configuration
     super.configure(http);
 

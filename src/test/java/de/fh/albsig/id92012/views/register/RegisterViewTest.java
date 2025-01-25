@@ -6,6 +6,9 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import de.fh.albsig.id92012.data.User;
+import de.fh.albsig.id92012.services.UserService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,12 +16,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.textfield.PasswordField;
-import com.vaadin.flow.component.textfield.TextField;
-import de.fh.albsig.id92012.data.User;
-import de.fh.albsig.id92012.services.UserService;
 
+/**
+ * The test class for RegisterView.
+ */
 public class RegisterViewTest {
 
   @Mock
@@ -29,11 +30,6 @@ public class RegisterViewTest {
 
   @InjectMocks
   private RegisterView registerView;
-
-  private TextField firstNameField;
-  private TextField lastNameField;
-  private PasswordField passwordField;
-  private Button registerButton;
 
   @BeforeEach
   void setUp() {

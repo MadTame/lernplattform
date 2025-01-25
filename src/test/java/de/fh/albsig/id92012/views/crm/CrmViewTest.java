@@ -5,16 +5,21 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import com.vaadin.flow.component.dialog.Dialog;
+import com.vaadin.flow.component.grid.Grid;
+import de.fh.albsig.id92012.data.User;
+import de.fh.albsig.id92012.services.UserService;
 import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import com.vaadin.flow.component.dialog.Dialog;
-import com.vaadin.flow.component.grid.Grid;
-import de.fh.albsig.id92012.data.User;
-import de.fh.albsig.id92012.services.UserService;
 
+
+/**
+ * The test class for CrmView.
+ */
 class CrmViewTest {
 
   private UserService userServiceMock;
