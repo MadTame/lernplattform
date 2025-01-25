@@ -15,11 +15,9 @@ import de.fh.albsig.id92012.data.User;
 import de.fh.albsig.id92012.services.UserService;
 import de.fh.albsig.id92012.views.login.LoginView;
 import io.micrometer.common.util.StringUtils;
-
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
