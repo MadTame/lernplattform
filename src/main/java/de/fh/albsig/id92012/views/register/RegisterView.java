@@ -10,11 +10,16 @@ import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
+import de.fh.albsig.id92012.data.Role;
 import de.fh.albsig.id92012.data.User;
 import de.fh.albsig.id92012.services.UserService;
 import de.fh.albsig.id92012.views.login.LoginView;
 import io.micrometer.common.util.StringUtils;
+
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -115,6 +120,11 @@ public class RegisterView extends VerticalLayout {
     user.setName(firstName + " " + lastName);
     user.setUsername(this.parseUsername(firstName, lastName));
     user.setHashedPassword(passwordEncoder.encode(password));
+
+    // grant user role
+    Set<Role> roles = new HashSet<>();
+    roles.add(Role.USER);
+    user.setRoles(roles);
 
     int counter = 1;
     while (this.userService.isUsernameTaken(user.getUsername())) {
